@@ -2,7 +2,7 @@
 % Please edit documentation in R/grouping_similarity.R
 \name{grouping_similarity}
 \alias{grouping_similarity}
-\title{Comparing similarity of two (or more) groupings}
+\title{grouping similarity}
 \usage{
 grouping_similarity(gr1, gr2 = NULL, groupwise.similarity = FALSE)
 }
@@ -14,9 +14,10 @@ grouping_similarity(gr1, gr2 = NULL, groupwise.similarity = FALSE)
 \item{groupwise.similarity}{Should we also show the similarity by each group?, Default: FALSE}
 }
 \value{
-\{wholelevel.similarity} A matrix showing the similarity of two groupings (ranging from 0 to 1).<br>
-\{groupwise.similarity} Similarity of each group in gr1 (if the input is the vector) or the first column
-(if the input is a data frame) and the rest of the groupings.
+\describe{
+\item{wholelevel.similarity}{A matrix showing the similarity of two groupings (ranging from 0 to 1).}
+\item{groupwise.similarity}{Similarity of each group in gr1 (if the input is the vector) or the first column
+(if the input is a data frame) and the rest of the groupings.}}
 }
 \description{
 \code{grouping_similarity} calculates the similarity of two (or more) groupings (e.g. respondents).
@@ -28,4 +29,15 @@ Based on the groupings in \code{gr1} and \code{gr2},
 indicates 1 if i and j belong to the same group and 0 otherwise.
 It then calculate the standardized hamming distance among matrices
 (i.e., the realized hamming distance divided by the maximum hamming distance).
+}
+\examples{
+## EXAMPLE1: input two vectors
+gr1 <- c(rep(1, 3), rep(2, 3), rep(3, 4))
+gr2 <- c(rep(1, 2), rep(2, 4), rep(3, 4))
+grouping_similarity(gr1 = gr1, gr2 = gr2)
+
+## EXAMPLE2: input data.frame
+gr3 <- data.frame(gr1, gr2)
+grouping_similarity(gr1 = gr3, groupwise.similarity = TRUE)
+
 }

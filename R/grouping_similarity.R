@@ -1,57 +1,44 @@
-# 二つのグループが等しいかどうかを判定する
-.same_or_diff <- function(vec){
-  n <- length(vec)
-  mat <- matrix(0, n, n)
-  for(i in 1:n){for(j in 1:n){
-    if(vec[i] == vec[j]){
-      mat[i,j] <- 1
-    }
-  }}
-  diag(mat) <- 0
-  mat
-}
-
-# インプット
-#' @title Comparing similarity of two (or more) groupings
+#' grouping similarity
 #' @description \code{grouping_similarity} calculates the similarity of two (or more) groupings (e.g. respondents). 
 #' This function can be used, for example, to check how similar different clustering solutions are. 
 #' @param gr1 a vector or a data frame (each columns should indicate different groupings) 
 #' @param gr2 a vector to compare \code{gr1}, Default: NULL
 #' @param groupwise.similarity Should we also show the similarity by each group?, Default: FALSE
-#' @return \{wholelevel.similarity} A matrix showing the similarity of two groupings (ranging from 0 to 1).<br> 
-#' \{groupwise.similarity} Similarity of each group in gr1 (if the input is the vector) or the first column 
-#' (if the input is a data frame) and the rest of the groupings.
+#' @return \describe{
+#' \item{wholelevel.similarity}{A matrix showing the similarity of two groupings (ranging from 0 to 1).}
+#' \item{groupwise.similarity}{Similarity of each group in gr1 (if the input is the vector) or the first column 
+#' (if the input is a data frame) and the rest of the groupings.}} 
 #' @details Based on the groupings in \code{gr1} and \code{gr2},
 #' \code{grouping_similarity} first construct the matrices in that the entry 
 #' indicates 1 if i and j belong to the same group and 0 otherwise. 
 #' It then calculate the standardized hamming distance among matrices
-#'  (i.e., the realized hamming distance divided by the maximum hamming distance). 
+#'  (i.e., the realized hamming distance divided by the maximum hamming distance).
 #' @examples
-#' # EXAMPLE1
+#' ## EXAMPLE1: input two vectors
 #' gr1 <- c(rep(1, 3), rep(2, 3), rep(3, 4))
 #' gr2 <- c(rep(1, 2), rep(2, 4), rep(3, 4))
-#' grouping_similarity(gr1 = gr1, gr2 = gr2, groupwise.similarity = T)
+#' grouping_similarity(gr1 = gr1, gr2 = gr2)
 #' 
-#' # EXAMPLE2
+#' ## EXAMPLE2: input data.frame
 #' gr3 <- data.frame(gr1, gr2)
-#' grouping_similarity(gr1 = gr3, groupwise.similarity = T)
-#' 
-#' #' \dontrun{
-#' #' # EXAMPLE1
-#' gr1 <- c(rep(1, 3), rep(2, 3), rep(3, 4))
-#' gr2 <- c(rep(1, 2), rep(2, 4), rep(3, 4))
-#' grouping_similarity(gr1 = gr1, gr2 = gr2, groupwise.similarity = T)
-#' 
-#' # EXAMPLE2
-#' gr3 <- data.frame(gr1, gr2)
-#' grouping_similarity(gr1 = gr3, groupwise.similarity = T)
-#' 
-#' ## END(Not run)
-#' @rdname grouping_similarity
-#' @export 
-#' @importFrom base apply
+#' grouping_similarity(gr1 = gr3, groupwise.similarity = TRUE)
+#'
+#' @export
 grouping_similarity <- function(
     gr1, gr2 = NULL, groupwise.similarity = FALSE){
+  # 内部で使用する関数
+  .same_or_diff <- function(vec){
+    n <- length(vec)
+    mat <- matrix(0, n, n)
+    for(i in 1:n){for(j in 1:n){
+      if(vec[i] == vec[j]){
+        mat[i,j] <- 1
+      }
+    }}
+    diag(mat) <- 0
+    mat
+  }
+  
   # grを一つに統合する
   gr <- gr1
   if(is.null(gr2)==F){
@@ -62,7 +49,7 @@ grouping_similarity <- function(
   n <- nrow(gr)
   
   # 同じグループに所属するものを1としたマトリクスをベクトル化
-  same_mat_vectorized <- base::apply(X = gr, MARGIN = 2, FUN = .same_or_diff)
+  same_mat_vectorized <- apply(X = gr, MARGIN = 2, FUN = .same_or_diff)
   # マトリクスに戻す
   same_mat_array <- array(same_mat_vectorized, dim = c(n, n, ncol(same_mat_vectorized)))
   
@@ -96,3 +83,4 @@ grouping_similarity <- function(
   }
   out
 }
+
