@@ -4,7 +4,10 @@
 .Ruserdata
 perosnal_documents
 tests
+<<<<<<< HEAD
 .Rdata
 .httr-oauth
 .DS_Store
 .quarto
+=======
+>>>>>>> 122db1fcce0d880e54132aa81f3f1686ce285072

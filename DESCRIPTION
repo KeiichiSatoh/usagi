@@ -1,6 +1,6 @@
 Package: usagi
 Title: Utilities for Sociological Analysis with Getting (good) Ideas
-Version: 0.0.1.1
+Version: 0.0.1
 Authors@R: 
     person("Keiichi", "Satoh", , "keiichi.satoh@r.hit-u.ac.jp", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0003-3316-301X"))
