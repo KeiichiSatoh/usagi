@@ -18,7 +18,12 @@
 #' It is strongly recommended to keep at least 10 seconds between requests (`sleep_sec >= 10`) to avoid being blocked.
 #'
 #' @note This function depends on the availability of \url{https://www.geocoding.jp} and requires the packages `xml2` and `sf`.
-#'
+#' @importFrom xml2 read_xml
+#' @importFrom xml2 xml_text
+#' @importFrom xml2 xml_find_first
+#' @importFrom sf st_as_sf 
+#' 
+#' 
 #' @examples
 #' \dontrun{
 #' addresses <- c("東京都国立市中2-1", "京都府京都市左京区吉田本町")
