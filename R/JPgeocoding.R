@@ -69,6 +69,8 @@ JPgeocoding <- function(address, encoding = "UTF-8", sleep_sec = 10,
     Sys.sleep(sleep_sec)
   }
   
+  cat("...DONE\n\n")
+  
   if(with_address){
     coords <- data.frame(address = address, coords)
   }
