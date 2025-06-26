@@ -4,3 +4,7 @@
 .Ruserdata
 perosnal_documents
 tests
+.Rdata
+.httr-oauth
+.DS_Store
+.quarto
